@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccueilController!{% endblock %}
+
+{% block body %}
+<div class="container">
+<hr>
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 80%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h3 style="font-family: 'Gloria Hallelujah', cursive;"> Bienvenue à tous sur TrucksMania, le seul site qui vous permet de découvrir
+    les meilleurs foodtrucks prés de chez vous. Si vous souhaitez voir les Foodtrucks présents à proximité de vous autorisez votre geolocalisation.</h3>
+    <button id ="find-me">Show my location</button><br/>
+    <p id = "status"></p>
+    <a id = "map-link" target="_blank"></a>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36394.4141622631!2d4.066289717107642!3d44.819898802499836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDTCsDQ5JzUxLjciTiA0wrAwNicwOC41IkU!5e0!3m2!1sfr!2sfr!4v1631308820568!5m2!1sfr!2sfr" width="800" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        {% block javascripts %}
+            {#{{ geoloc en JS à venir }}#}
+        {% endblock %}
+</div>
+</div>
+{% endblock %}

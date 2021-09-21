@@ -11,6 +11,7 @@ use App\Entity\User;
 use App\Form\TruckRegisterType;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\TruckRepository;
+use App\Repository\UserRepository;
 
 
 class TruckController extends AbstractController
@@ -31,7 +32,7 @@ class TruckController extends AbstractController
             $form = $this->createForm(TruckRegisterType::class, $truck);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()){
-                $truck->setUser($this->getUser($id));
+                $truck->setUser($this->getUser());
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($truck);
                 $em->flush();
@@ -58,9 +59,9 @@ class TruckController extends AbstractController
         #[Route('/truck/mytruck/{id}', name: 'truck_mytruck')]
         public function mytruck($id, UserInterface $user){
             $data = $this->getDoctrine()->getRepository(Truck::class)->find($id);
-            return $this->render('truck/mytruck.html.twig', [
+            return $this->render('truck/mytruck.html.twig',[
                 'truck' => $data,
-                'username' => $user->getUsername()
+                'id' => $user->getTruck()->getId(),
             ]);
         }
 

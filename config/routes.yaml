@@ -16,3 +16,17 @@ login:
 home:
   path: /home
   controller: App\Controller\HomeController::index
+
+# routes truck
+
+truck:
+  path: /truck
+  controller: App\Controller\TruckController::index
+
+create:
+  path: /truck/create
+  controller: App\Controller\TruckController::create
+
+mytruck:
+  path: /truck/mytruck/{$id}
+  controller: App\Controller\TruckController::mytruck

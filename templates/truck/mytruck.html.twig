@@ -1,0 +1,32 @@
+{% extends 'basetruck.html.twig' %}
+
+{% block title %}My Truck{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h2>Bonjour {{ username }}</h2>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nom d'enseigne</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prenom</th>
+            <th scope="col">Telephone</th>
+            <th scope="col">Siret</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ truck.getNameTruck }}</td>
+            <td>{{ truck.getLastName }}</td>
+            <td>{{ truck.getFirstName }}</td>
+            <td>{{ truck.getPhoneNumber }}</td>
+            <td>{{ truck.siret }}</td>
+
+          </tr>
+          
+    
+        </tbody>
+    </table>
+</div>
+{% endblock %}

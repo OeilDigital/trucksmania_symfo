@@ -50,8 +50,19 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        $user = $token->getUser();
+        $roles = $user->getRoles();  //dans Entity
+ 
+        if(in_array('ROLE_CUSTOMER', $roles)){
+            return new RedirectResponse($this->urlGenerator->generate('customer'));
+        }elseif(in_array('ROLE_TRUCK', $roles)){
+            return new RedirectResponse($this->urlGenerator->generate('truck'));
+        }elseif(in_array('ROLE_PROFESSIONAL', $roles)){
+            return new RedirectResponse($this->urlGenerator->generate('professional'));
+        }else{
+            return new RedirectResponse($this->urlGenerator->generate('home'));
+        }
+        // return new RedirectResponse($this->urlGenerator->generate('accueil'));
         // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

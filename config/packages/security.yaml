@@ -24,7 +24,7 @@ security:
       custom_authenticator: App\Security\LoginAuthenticator
       logout:
         path: app_logout
-        # where to redirect after logout
+        target: /home
         # target: app_any_route
 
       # activate different ways to authenticate
@@ -38,3 +38,12 @@ security:
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
     - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/customer, roles: ROLE_CUSTOMER }
+    - { path: ^/truck, roles: ROLE_TRUCK }
+    - { path: ^/professional, roles: ROLE_PROFESSIONAL }
+
+  role_hierarchy:
+    ROLE_CUSTOMER: ROLE_USER
+    ROLE_TRUCK: ROLE_CUSTOMER
+    ROLE_PROFESSIONAL: ROLE_CUSTOMER
+    ROLE_ADMIN: ROLE_TRUCK

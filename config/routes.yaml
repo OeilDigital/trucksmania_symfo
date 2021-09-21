@@ -1,3 +1,18 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# routes register et login
+register:
+  path: /register
+  controller: App\Controller\RegistrationController::register
+
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+# routes accueil
+
+home:
+  path: /home
+  controller: App\Controller\HomeController::index

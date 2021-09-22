@@ -8,10 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Truck;
 use App\Entity\User;
+use App\Entity\Product;
 use App\Form\TruckRegisterType;
+use App\Form\FormProductType;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\TruckRepository;
 use App\Repository\UserRepository;
+use App\Repository\ProductRepository;
 
 
 class TruckController extends AbstractController
@@ -56,6 +59,8 @@ class TruckController extends AbstractController
     
         }
 
+        // Methode pour routage et affichage de page personnalisé si connecté
+
         #[Route('/truck/mytruck/{id}', name: 'truck_mytruck')]
         public function mytruck($id, UserInterface $user){
             $data = $this->getDoctrine()->getRepository(Truck::class)->find($id);
@@ -65,5 +70,35 @@ class TruckController extends AbstractController
             ]);
         }
 
-}
+        #[Route('/truck/createproduct', name: 'truck_createproduct')]
+        public function createproduct(Request $request,UserInterface $user){
+            $product = new Product();
+            $form = $this->createForm(FormProductType::class, $product);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $product->setTruck($this->getUser()->getTruck());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($product);
+                $em->flush();
+    
+                $this->addFlash('notice','Enregistrement Réussi!');
+    
+                return $this->redirectToRoute('truck_createproduct');
+            } else {
+    
+                $this->addFlash('notice','Votre inscription n\'a pas été prise en compte');
+            }
+    
+            return $this->render('truck/createproduct.html.twig',[
+                'form' => $form->createView(),
+                'product_name' => 'Nom du produit',
+                'type' => 'Catégorie',
+                'price' => 'Prix',
+                'description' => 'Description',
+                
+            ]);
+        
+            }
+        }
+
 

@@ -59,6 +59,11 @@ class Truck
      */
     private $addresses;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $style;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -195,6 +200,18 @@ class Truck
         if ($this->addresses->removeElement($address)) {
             $address->removeTruck($this);
         }
+
+        return $this;
+    }
+
+    public function getStyle(): ?string
+    {
+        return $this->style;
+    }
+
+    public function setStyle(?string $style): self
+    {
+        $this->style = $style;
 
         return $this;
     }

@@ -30,3 +30,23 @@ create:
 mytruck:
   path: /truck/mytruck/{$id}
   controller: App\Controller\TruckController::mytruck
+
+menu:
+  path: /truck/menu
+  controller: App\Controller\TruckController::menu
+
+update:
+  path: /truck/update/{id}
+  controller: App\Controller\TruckController::update
+
+createproduct:
+  path: /truck/createproduct
+  controller: App\Controller\TruckController::createproduct
+
+updateproduct:
+  path: /truck/updateproduct/{id}
+  controller: App\Controller\TruckController::updateproduct
+
+deleteproduct:
+  path: /truck/deleteproduct/{id}
+  controller: App\Controller\TruckController::deleteproduct

@@ -13,6 +13,7 @@
             <th scope="col">Prenom</th>
             <th scope="col">Telephone</th>
             <th scope="col">Siret</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,10 +23,10 @@
             <td>{{ truck.getFirstName }}</td>
             <td>{{ truck.getPhoneNumber }}</td>
             <td>{{ truck.siret }}</td>
-
+            <td>
+              <a class="btn btn-success" href="{{ path('update',{'id': app.user.truck.id }) }}">Mettre à jour</a>
+            </td>
           </tr>
-          
-    
         </tbody>
     </table>
 </div>

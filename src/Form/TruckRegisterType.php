@@ -18,6 +18,7 @@ class TruckRegisterType extends AbstractType
     {
         $builder
             ->add('name_truck')
+            ->add('style')
             ->add('last_name')
             ->add('first_name')
             ->add('phone_number')

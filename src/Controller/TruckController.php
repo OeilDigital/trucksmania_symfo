@@ -28,6 +28,8 @@ class TruckController extends AbstractController
         ]);
     }
 
+    // Creation d'un profil Truck suite à inscription User
+
         #[Route('/truck/create', name: 'create')]
 
         public function create(Request $request, UserInterface $user){
@@ -51,6 +53,7 @@ class TruckController extends AbstractController
             return $this->render('truck/create.html.twig',[
                 'form' => $form->createView(),
                 'name_truck' => 'Nom d\'enseigne',
+                'style' => 'Style',
                 'last_name' => 'Nom de famille',
                 'first_name' => 'Prénom',
                 'phone_number' => 'Téléphone',
@@ -59,7 +62,37 @@ class TruckController extends AbstractController
     
         }
 
-        // Methode pour routage et affichage de page personnalisé si connecté
+//  Mise à jour des informations d'inscription Truck
+
+        #[Route('/trucks/update/{id}', name: "update")]
+        public function update(Request $request,UserInterface $user,$id){
+            $truck = $this->getDoctrine()->getRepository(Truck::class)->find($id);
+            $form = $this->createForm(TruckRegisterType::class, $truck);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $truck->setUser($this->getUser());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($truck);
+                $em->flush();
+        
+                $this->addFlash('notice','Mise à jour réussie!');
+        
+                return $this->redirectToRoute('truck');
+            }
+        
+            return $this->render('truck/update.html.twig',[
+                'form' => $form->createView(),
+                'name_truck' => 'Nom d\'enseigne',
+                'style' => 'Style',
+                'last_name' => 'Nom de famille',
+                'first_name' => 'Prénom',
+                'phone_number' => 'Téléphone',
+                'siret' => 'Numéro de siret',
+            ]);
+        
+            }
+
+// Methode pour routage et affichage de page personnalisé si connecté
 
         #[Route('/truck/mytruck/{id}', name: 'truck_mytruck')]
         public function mytruck($id, UserInterface $user){
@@ -69,6 +102,9 @@ class TruckController extends AbstractController
                 'id' => $user->getTruck()->getId(),
             ]);
         }
+
+
+// Creation de produits
 
         #[Route('/truck/createproduct', name: 'truck_createproduct')]
         public function createproduct(Request $request,UserInterface $user){
@@ -98,7 +134,75 @@ class TruckController extends AbstractController
                 
             ]);
         
-            }
         }
+
+    // Affichage de l'ensemble des produit par utilisateur
+
+    #[Route('/truck/menu', name: 'truck_menu')]
+    public function menu(ProductRepository $product, UserInterface $user){
+    $data = $this->getDoctrine()->getRepository(Product::class)->findBy(array('truck' => $user->getTruck()));
+    // $data = $this->getDoctrine()->getRepository(Product::class)->findBy([], ['truck_id' => $product->getTruck($this->getUser()->getTruck())]);
+    return $this->render('truck/menu.html.twig', [
+        'list' => $data,
+    ]);
+    }
+
+// Mise à jour des produit
+
+
+    #[Route('/truck/updateproduct/{id}', name: "updateproduct")]
+
+    public function updateproduct(Request $request, UserInterface $user, $id){
+    $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+    $form = $this->createForm(FormProductType::class, $product);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()){
+        $product->setTruck($this->getUser()->getTruck());
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($product);
+        $em->flush();
+
+        $this->addFlash('notice','Mise à jour réussie!');
+
+        return $this->redirectToRoute('truck');
+    }
+
+    return $this->render('truck/updateproduct.html.twig',[
+        'form' => $form->createView(),
+        'product_name' => 'Nom du produit',
+        'type' => 'Catégorie',
+        'price' => 'Prix',
+        'description' => 'Description',
+        
+    ]);
+
+    }
+
+// Supprimer un produit
+
+     #[Route('/truck/delete/{id}', name: "delete")]
+     public function delete($id){
+        $data = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($data);
+        $em->flush();
+
+        $this->addFlash('notice','Données effacées!');
+
+        return $this->redirectToRoute('truck');
+        
+
+    }
+
+
+
+
+
+
+
+}
+
+
+
 
 

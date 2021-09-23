@@ -30,7 +30,7 @@
               <a class="btn btn-success" href="{{ path('updateproduct',{'id': data.id }) }}">Mettre à jour</a>
             </td>
             <td>
-              <a class="btn btn-danger" href="truck/update/{{ app.user.truck.id }}">Effacer</a>
+              <a class="btn btn-danger" href="{{ path('delete',{'id': data.id }) }}">Effacer</a>
             </td>
           </tr>
         {% endfor %}

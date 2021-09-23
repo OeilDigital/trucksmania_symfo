@@ -9,12 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Truck;
 use App\Entity\User;
 use App\Entity\Product;
+use App\Entity\Address;
 use App\Form\TruckRegisterType;
 use App\Form\FormProductType;
+use App\Form\FormAddressType;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\TruckRepository;
 use App\Repository\UserRepository;
 use App\Repository\ProductRepository;
+use App\Repository\AddressRepository;
 
 
 class TruckController extends AbstractController
@@ -194,6 +197,38 @@ class TruckController extends AbstractController
 
     }
 
+// Gestion des addresse
+
+    #[Route('/truck/createaddress', name: 'createaddress')]
+    public function createaddress(Request $request,UserInterface $user){
+        $address = new Address();
+        $form = $this->createForm(FormAddressType::class, $address);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $address->addTruck($this->getUser()->getTruck());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($address);
+            $em->flush();
+
+            $this->addFlash('notice','Enregistrement Réussi!');
+
+            return $this->redirectToRoute('truck');
+        } else {
+
+            $this->addFlash('notice','Votre inscription n\'a pas été prise en compte');
+        }
+
+        return $this->render('truck/createaddress.html.twig',[
+            'form' => $form->createView(),
+            'street_number' => 'N° de voirie',
+            'street_name' => 'Nom de voirie',
+            'post_code' => 'Code Postal',
+            'city' => 'Ville',
+            'additional_address' => 'Informations complémentaires'
+            
+        ]);
+    
+    }
 
 
 

@@ -50,3 +50,7 @@ updateproduct:
 deleteproduct:
   path: /truck/deleteproduct/{id}
   controller: App\Controller\TruckController::deleteproduct
+
+createaddress:
+  path: /truck/createaddress
+  controller: App\Controller\TruckController::createaddress

@@ -66,3 +66,22 @@ updateaddress:
 deleteaddress:
   path: /truck/deleteaddress/{id}
   controller: App\Controller\TruckController::deleteAddress
+
+#Routes Customer
+
+customer:
+  path: /customer
+  controller: App\Controller\CustomerController::index
+
+createcustomer:
+  path: /customer/createcustomer
+  controller: App\Controller\CustomerController::createcustomer
+
+updatecustomer:
+  path: /customer/updatecustomer/{id}
+  controller: App\Controller\CustomerController::updatecustomer
+
+ownpage:
+  path: /customer/ownpage/{id}
+  controller: App\Controller\CustomerController::ownpage
+#[Route('/customer/ownpage/{id}', name: 'ownpage')]

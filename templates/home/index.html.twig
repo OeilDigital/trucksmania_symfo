@@ -28,31 +28,51 @@
 </div>
 {% endblock %}
 {% block javascripts %}
-                <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
       crossorigin=""></script>
     <script>
-        var x = document.getElementById("demo");
 
+        var x = document.getElementById("demo");
+        //geolocalisation du visiteur
         function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else { 
-            x.innerHTML = "Geolocation is not supported by this browser.";
-        }
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
         }
 
         function showPosition(position) {
-        let latitude = position.coords.latitude; 
-        let longitude = position.coords.longitude;
-        
-        var carte = L.map('macarte').setView([latitude, longitude], 15);
-        L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-                // Il est toujours bien de laisser le lien vers la source des données
-                attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-                minZoom: 1,
-                maxZoom: 20
-            }).addTo(carte);
+            let latitude = position.coords.latitude; 
+            let longitude = position.coords.longitude;
+            
+            // Tableau de geoloc/trucks-test(factices)
+            var trucks = {
+                "Truck1": {"lat": 43.599933817437666, "lon": 3.860247949410145 },
+                "Truck2": {"lat": 43.5951901200623, "lon": 3.8672780328201832 },
+            };
+
+
+            // On initialise la carte
+            var carte = L.map('macarte').setView([latitude, longitude], 15);
+
+            //On charge les tuiles
+            L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    // Il est toujours bien de laisser le lien vers la source des données
+                    attribution: 'données © <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+                    minZoom: 1,
+                    maxZoom: 20
+                }).addTo(carte);
+
+            for (truck in trucks){
+            var markerT = L.marker([trucks[truck].lat, trucks[truck].lon]).addTo(carte);
+            markerT.bindPopup("<h6>"+truck+"</h6>").openPopup();
+            }
+
+            var marker = L.marker([latitude, longitude]).addTo(carte);
+            marker.bindPopup("<h6>Salut à toi!</h6>").openPopup();
+
         }
     </script>  
 {% endblock %}

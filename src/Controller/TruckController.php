@@ -197,7 +197,9 @@ class TruckController extends AbstractController
 
     }
 
-// Gestion des addresse
+// Gestion des adresses
+
+// Crèation d'une nouvelle adressse
 
     #[Route('/truck/createaddress', name: 'createaddress')]
     public function createaddress(Request $request,UserInterface $user){
@@ -229,6 +231,62 @@ class TruckController extends AbstractController
         ]);
     
     }
+
+    // Liste des adresses
+
+        #[Route('/truck/listaddress', name: 'truck_listaddress')]
+        public function listaddress(AddressRepository $address, UserInterface $user){
+            $data = $this->getDoctrine()->getRepository(Address::class)->findBy(array('truck' => $user->getTruck()));
+            return $this->render('truck/listaddress.html.twig', [
+                'list' => $data,
+            ]);
+            }
+
+
+    // Mise à jour d'une adresse
+
+        #[Route('/truck/updateaddress/{id}', name: "updateaddress")]
+        public function updateaddress(Request $request, UserInterface $user, $id){
+            $address = $this->getDoctrine()->getRepository(Address::class)->find($id);
+            $form = $this->createForm(FormAddressType::class, $address);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $address->addTruck($this->getUser()->getTruck());
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($address);
+                $em->flush();
+        
+                $this->addFlash('notice','Mise à jour réussie!');
+        
+                return $this->redirectToRoute('listaddress');
+            }
+        
+            return $this->render('truck/updateaddress.html.twig',[
+                'form' => $form->createView(),
+                'street_number' => 'N° de voirie',
+                'street_name' => 'Nom de voirie',
+                'post_code' => 'Code Postal',
+                'city' => 'Ville',
+                'additional_address' => 'Informations complémentaires'
+                
+            ]);
+        
+            }
+
+        #[Route('/truck/deleteaddress/{id}', name: "deleteaddress")]
+
+        public function deleteAddress($id){
+        $data = $this->getDoctrine()->getRepository(Address::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($data);
+        $em->flush();
+
+        $this->addFlash('notice','Données effacées!');
+
+        return $this->redirectToRoute('listaddress');
+        
+
+    } 
 
 
 

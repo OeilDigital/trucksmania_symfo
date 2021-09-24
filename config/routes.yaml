@@ -14,7 +14,7 @@ login:
 # routes accueil
 
 home:
-  path: /home
+  path: /
   controller: App\Controller\HomeController::index
 
 # routes truck
@@ -54,3 +54,15 @@ deleteproduct:
 createaddress:
   path: /truck/createaddress
   controller: App\Controller\TruckController::createaddress
+
+listaddress:
+  path: /truck/listaddress
+  controller: App\Controller\TruckController::listaddress
+
+updateaddress:
+  path: /truck/updateaddress/{id}
+  controller: App\Controller\TruckController::updateaddress
+
+deleteaddress:
+  path: /truck/deleteaddress/{id}
+  controller: App\Controller\TruckController::deleteAddress

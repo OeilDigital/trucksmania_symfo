@@ -32,15 +32,7 @@ class RegistrationFormType extends AbstractType
                     'Professionnel' => 'ROLE_PROFESSIONAL'
                 ]
             ])
-            
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Mot de passe incorrect',
@@ -62,6 +54,16 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'You should agree to our terms.',
+                    ]),
+                ],
+            ])
+
 
         ;
     }

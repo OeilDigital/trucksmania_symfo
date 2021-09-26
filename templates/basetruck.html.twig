@@ -37,13 +37,7 @@
                             <a class="nav-link" href="#">Mes commandes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('menu') }}">Ma carte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('create') }}">Inscription</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('createproduct') }}">Produit/Creation</a>
+                            <a class="nav-link" href="#">Mes Evenements</a>
                         </li>
                         <li class="nav-item">
                             {# <a class="nav-link" href="{{ path('createaddress') }}">New Adresse</a>
@@ -52,12 +46,12 @@
                             <a class="nav-link" href="{{ path('listaddress') }}">Adresses</a>
                         </li> #}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mes Adresses</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Nouvel Enregistrement</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ path('createaddress') }}">Nouvelle Adresse</a>
-                                <a class="dropdown-item" href="{{ path('listaddress') }}">Liste</a>
+                                <a class="dropdown-item" href="{{ path('createproduct') }}">Nouveau Produit</a>
                                 <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
+                                    <a class="dropdown-item" href="{{ path('create') }}">Inscription</a>
                             </div>
                         </li>
 

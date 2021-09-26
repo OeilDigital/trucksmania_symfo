@@ -84,4 +84,11 @@ updatecustomer:
 ownpage:
   path: /customer/ownpage/{id}
   controller: App\Controller\CustomerController::ownpage
-#[Route('/customer/ownpage/{id}', name: 'ownpage')]
+
+alltrucks:
+  path: /customer/alltrucks
+  controller: App\Controller\CustomerController::alltrucks
+
+showmenu:
+  path: /customer/showmenu/{id}
+  controller: App\Controller\CustomerController::showmenu

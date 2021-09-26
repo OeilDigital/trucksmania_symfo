@@ -7,7 +7,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Customer;
+use App\Entity\Truck;
+use App\Entity\Product;
 use App\Repository\CustomerRepository;
+use App\Repository\TruckRepository;
+use App\Repository\ProductRepository;
 use App\Form\FormCustomerType;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -88,6 +92,30 @@ class CustomerController extends AbstractController
             'id' => $user->getCustomer()->getId(),
         ]);
     }
+
+//Liste compléte des Trucks à afficher dans customers
+
+            #[Route('/customer/alltrucks', name: 'alltrucks')]
+            public function alltrucks(){
+                $data = $this->getDoctrine()->getRepository(Truck::class)->findAll();
+
+                return $this->render('customer/alltrucks.html.twig',[
+                    'trucks' => $data,
+                    ]);
+            }
+
+            
+            
+    #[Route('/customer/showmenu/{id}', name: 'showmenu')]
+        public function showmenu($id,ProductRepository $product, TruckRepository $truck){
+        $truck = $this->getDoctrine()->getRepository(Truck::class)->find($id);
+        $product = $this->getDoctrine()->getRepository(Product::class)->findBy(array('truck' => $truck ));
+        // $data = $this->getDoctrine()->getRepository(Product::class)->findBy([], ['truck_id' => $product->getTruck($this->getUser()->getTruck())]);
+        return $this->render('customer/showmenu.html.twig', [
+            'list' => $product,
+            'truck' => $truck
+        ]);
+        }
 
 
 

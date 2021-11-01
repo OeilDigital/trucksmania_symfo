@@ -117,8 +117,28 @@ class CustomerController extends AbstractController
         ]);
         }
 
+    // #[Route('/customer/panier', name: 'cart_index')]
 
+    //     public function panier()
+    //     {
+    //         return $this->render('customer/panier.html.twig', []);
+    //     }
 
+    #[Route('/customer/add/{id}', name:'cart_add')]
+    public function add($id, Request $request){
+        $session = $request->getSession();
+        $panier = $session->get('panier', []);
 
+        if(!empty($panier[$id])){
+            $panier[$id]++;
+        }else{
+            $panier[$id] = 1;
+        }
+
+        
+        $session->set('panier', $panier);
+
+        dd($session->get('panier'));
+    }
 
 }

@@ -98,10 +98,11 @@ class TruckController extends AbstractController
 // Methode pour routage et affichage de page personnalisé si connecté
 
         #[Route('/truck/mytruck/{id}', name: 'truck_mytruck')]
-        public function mytruck($id,ProductRepository $product, UserInterface $user){
+        public function mytruck($id,ProductRepository $product, AddressRepository $address, UserInterface $user){
             $data = $this->getDoctrine()->getRepository(Truck::class)->find($id);
             $products = $this->getDoctrine()->getRepository(Product::class)->findBy(array('truck' => $user->getTruck()));
             $addresses = $this->getDoctrine()->getRepository(Address::class)->findBy(array('truck' => $user->getTruck()));
+            
             return $this->render('truck/mytruck.html.twig',[
                 'truck' => $data,
                 'products' => $products,
@@ -240,7 +241,7 @@ class TruckController extends AbstractController
 
         #[Route('/truck/listaddress', name: 'truck_listaddress')]
         public function listaddress(AddressRepository $address, UserInterface $user){
-            $data = $this->getDoctrine()->getRepository(Address::class)->findBy(array('truck' => $user->getTruck()));
+            $data = $this->getDoctrine()->getRepository(Address::class)->findBy(array('truck' => $user->getTruck() ));
             return $this->render('truck/listaddress.html.twig', [
                 'list' => $data,
             ]);

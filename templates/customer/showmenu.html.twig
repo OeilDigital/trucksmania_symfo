@@ -26,7 +26,10 @@
             <td>{{ data.getPrice }}</td>
             <td>{{ data.getDescription }}</td>
             <td>
-              <a class="btn btn-success" href="#">Ajouter au Pannier</a>
+              <a href="{{path('cart_add', {'id': data.id}) }}" class="btn btn-success float-right">
+                        <i class="fas fa-shopping-cart mr-1"></i>
+                        Ajouter au Panier
+              </a>
             </td>
             <td>
               <a class="btn btn-warning" href="#">Retirer du  Pannier</a>

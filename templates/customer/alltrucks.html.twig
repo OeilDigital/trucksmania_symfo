@@ -12,7 +12,7 @@
         <thead>
           <tr>
             <th scope="col">Nom d'enseigne</th>
-            {# <th scope="col">Style</th> #}
+            <th scope="col">Style</th>
             <th scope="col">Email</th>
             <th scope="col">Telephone</th>
             <th></th>
@@ -22,7 +22,7 @@
         {% for truck in trucks %}
           <tr>
             <td >{{ truck.getNameTruck }}</td>
-            {# <td>{{ truck.user.email}}</td> #}
+            <td>{{ truck.getStyle}}</td>
             <td>{{ truck.user.email }}</td>
             <td>{{ truck.getPhoneNumber }}</td>
             <td>

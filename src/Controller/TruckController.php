@@ -29,6 +29,8 @@ class TruckController extends AbstractController
             'username' => $user->getUsername(),
 
         ]);
+
+        
     }
 
     // Creation d'un profil Truck suite à inscription User
@@ -67,7 +69,7 @@ class TruckController extends AbstractController
 
 //  Mise à jour des informations d'inscription Truck
 
-        #[Route('/trucks/update/{id}', name: "update")]
+        #[Route('/truck/update/{id}', name: "update")]
         public function update(Request $request,UserInterface $user,$id){
             $truck = $this->getDoctrine()->getRepository(Truck::class)->find($id);
             $form = $this->createForm(TruckRegisterType::class, $truck);
@@ -98,11 +100,11 @@ class TruckController extends AbstractController
 // Methode pour routage et affichage de page personnalisé si connecté
 
         #[Route('/truck/mytruck/{id}', name: 'truck_mytruck')]
-        public function mytruck($id,ProductRepository $product, AddressRepository $address, UserInterface $user){
+        public function mytruck($id,ProductRepository $product, AddressRepository $address, UserInterface $user, TruckRepository $truck){
             $data = $this->getDoctrine()->getRepository(Truck::class)->find($id);
+            $value = $data->getId();
             $products = $this->getDoctrine()->getRepository(Product::class)->findBy(array('truck' => $user->getTruck()));
-            $addresses = $this->getDoctrine()->getRepository(Address::class)->findBy(array('truck' => $user->getTruck()));
-            
+            $addresses = $this->getDoctrine()->getRepository(Address::class)->findMyAddresses($value);
             return $this->render('truck/mytruck.html.twig',[
                 'truck' => $data,
                 'products' => $products,
@@ -263,7 +265,7 @@ class TruckController extends AbstractController
         
                 $this->addFlash('notice','Mise à jour réussie!');
         
-                return $this->redirectToRoute('listaddress');
+                return $this->redirectToRoute('truck');
             }
         
             return $this->render('truck/updateaddress.html.twig',[
@@ -276,7 +278,7 @@ class TruckController extends AbstractController
                 
             ]);
         
-            }
+        }
 
         #[Route('/truck/deleteaddress/{id}', name: "deleteaddress")]
 
@@ -288,16 +290,12 @@ class TruckController extends AbstractController
 
         $this->addFlash('notice','Données effacées!');
 
-        return $this->redirectToRoute('listaddress');
+        return $this->redirectToRoute('truck');
         
 
-    } 
+        }
 
-
-
-
-
-
+        
 }
 
 

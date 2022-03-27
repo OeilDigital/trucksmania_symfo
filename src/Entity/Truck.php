@@ -55,7 +55,7 @@ class Truck
     private $products;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Address::class, mappedBy="truck")
+     * @ORM\ManyToMany(targetEntity=Address::class, mappedBy="truck", cascade={"persist"})
      */
     private $addresses;
 

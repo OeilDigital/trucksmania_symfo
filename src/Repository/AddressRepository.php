@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Address;
+use App\Entity\Truck;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,9 +20,9 @@ class AddressRepository extends ServiceEntityRepository
         parent::__construct($registry, Address::class);
     }
 
-     /**
-      * @return Address[] Returns an array of Address objects
-      */
+    /**
+     * @return Address[] Returns an array of Address objects
+     */
     
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
@@ -30,21 +31,48 @@ class AddressRepository extends ServiceEntityRepository
             // ->setParameter('val', $criteria)
             // ->orderBy()
             // ->setMaxResults()
+            // ->orderBy()
+            // ->setMaxResults()
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    //jointure avec truck.id spécifique
+    /**
+     * @return Address[] Returns an array of Address objects
+     */
+    
+    public function findMyAddresses($value)
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.truck','t', 'WITH', 't.id = :val')
+            ->setParameter ( 'val', $value)
+            // ->andWhere()
+            // ->orderBy()
+            // ->setMaxResults()
+            // ->orderBy()
+            // ->setMaxResults()
             ->getQuery()
             ->getResult()
         ;
     }
     
 
-    /*
-    public function findOneBySomeField($value): ?Address
+    /**
+     * @return Address[] Returns an array of Address objects
+     */
+    // Pour récupérer toutes les adresses d'un Truck en particulier
+    public function skipAddresses(): array
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('a.street_number','a.street_name','a.post_code','a.city')
+            // ->andWhere()
+            // ->select('a.id', 'a.street_number','a.street_name','a.post_code','a.city','t.name_truck')
+            // ->leftJoin('App\Entity\Truck', 't', 'WITH', 'a.id = t.id')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
+    
 }

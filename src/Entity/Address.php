@@ -50,7 +50,7 @@ class Address
     private $gps;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Truck::class, inversedBy="addresses")
+     * @ORM\ManyToMany(targetEntity=Truck::class, inversedBy="addresses", cascade={"persist"})
      */
     private $truck;
 

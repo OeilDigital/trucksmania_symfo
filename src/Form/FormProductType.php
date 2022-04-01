@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class FormProductType extends AbstractType
 {
@@ -13,7 +14,15 @@ class FormProductType extends AbstractType
     {
         $builder
             ->add('product_name')
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Boisson' => 'boisson',
+                    'Sandwich' => 'sandwich',
+                    'Kebab' => 'kebab',
+                    'Spécialité' => 'spécialité',
+                    'Menu' => 'menu',
+                ],
+            ])
             ->add('price')
             ->add('description')
             // ->add('truck')

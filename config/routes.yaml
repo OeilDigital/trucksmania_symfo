@@ -17,6 +17,14 @@ home:
   path: /
   controller: App\Controller\HomeController::index
 
+foodtrucks:
+  path: /foodtrucks
+  controller: App\Controller\HomeController::foodtrucks
+
+foodtruckCard:
+  path: /foodtruck/{id}
+  controller: App\Controller\HomeController::foodtruckCard
+
 # routes truck
 
 truck:
@@ -28,7 +36,7 @@ create:
   controller: App\Controller\TruckController::create
 
 mytruck:
-  path: /truck/mytruck/{$id}
+  path: /truck/mytruck/{id}
   controller: App\Controller\TruckController::mytruck
 
 menu:
